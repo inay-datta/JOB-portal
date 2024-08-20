@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Management</title>
+    <style>
+        .section { display: none; }
+    </style>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function submitForm(event, formId, endpoint) {
+            event.preventDefault(); // Prevent default form submission
+
+            const form = document.getElementById(formId);
+            const formData = new FormData(form);
+            const data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Operation successful!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Operation failed!');
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Application Management</h1>
+
+    <nav>
+        <button onclick="showSection('register')">Register</button>
+        <button onclick="showSection('login')">Login</button>
+        <button onclick="showSection('createOrg')">Create Organization</button>
+        <button onclick="showSection('getOrg')">Get Organization</button>
+        <button onclick="showSection('updateOrg')">Update Organization</button>
+        <button onclick="showSection('deleteOrg')">Delete Organization</button>
+        <button onclick="showSection('createJob')">Create Job</button>
+        <button onclick="showSection('getJob')">Get Job</button>
+        <button onclick="showSection('updateJob')">Update Job</button>
+        <button onclick="showSection('deleteJob')">Delete Job</button>
+        <button onclick="showSection('createProfile')">Create Profile</button>
+        <button onclick="showSection('getProfile')">Get Profile</button>
+        <button onclick="showSection('updateProfile')">Update Profile</button>
+        <button onclick="showSection('deleteProfile')">Delete Profile</button>
+        <button onclick="showSection('createApp')">Create Application</button>
+        <button onclick="showSection('getApp')">Get Application</button>
+        <button onclick="showSection('deleteApp')">Delete Application</button>
+    </nav>
+
+    <!-- Register Section -->
+    <div id="register" class="section">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <label for="user_type">User Type:</label>
+            <input type="text" id="user_type" name="user_type">
+            <br>
+            <button type="button" onclick="submitForm(event, 'registerForm', 'http://127.0.0.1:7002/register')">Register</button>
+        </form>
+    </div>
+
+    <!-- Login Section -->
+    <div id="login" class="section">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'loginForm', 'http://127.0.0.1:7002/login')">Login</button>
+        </form>
+    </div>
+
+    <!-- Create Organization Section -->
+    <div id="createOrg" class="section">
+        <h2>Create Organization</h2>
+        <form id="createOrgForm">
+            <label for="name">Organization Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br>
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address">
+            <br>
+            <label for="gst">GST:</label>
+            <input type="text" id="gst" name="gst">
+            <br>
+            <label for="foundationYear">Foundation Year:</label>
+            <input type="text" id="foundationYear" name="foundationYear">
+            <br>
+            <label for="funding">Funding:</label>
+            <input type="text" id="funding" name="funding">
+            <br>
+            <button type="button" onclick="submitForm(event, 'createOrgForm', 'http://127.0.0.1:7002/createorg')">Create Organization</button>
+        </form>
+    </div>
+
+    <!-- Get Organization Section -->
+    <div id="getOrg" class="section">
+        <h2>Get Organization</h2>
+        <form id="getOrgForm">
+            <label for="org_id">Organization ID:</label>
+            <input type="number" id="org_id" name="org_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'getOrgForm', 'http://127.0.0.1:7002/getorg')">Get Organization</button>
+        </form>
+    </div>
+
+    <!-- Update Organization Section -->
+    <div id="updateOrg" class="section">
+        <h2>Update Organization</h2>
+        <form id="updateOrgForm">
+            <label for="org_id">Organization ID:</label>
+            <input type="number" id="org_id" name="org_id" required>
+            <br>
+            <label for="name">New Organization Name:</label>
+            <input type="text" id="name" name="name">
+            <br>
+            <label for="address">New Address:</label>
+            <input type="text" id="address" name="address">
+            <br>
+            <label for="gst">New GST:</label>
+            <input type="text" id="gst" name="gst">
+            <br>
+            <label for="foundationYear">New Foundation Year:</label>
+            <input type="text" id="foundationYear" name="foundationYear">
+            <br>
+            <label for="funding">New Funding:</label>
+            <input type="text" id="funding" name="funding">
+            <br>
+            <button type="button" onclick="submitForm(event, 'updateOrgForm', 'http://127.0.0.1:7002/updateorg')">Update Organization</button>
+        </form>
+    </div>
+
+    <!-- Delete Organization Section -->
+    <div id="deleteOrg" class="section">
+        <h2>Delete Organization</h2>
+        <form id="deleteOrgForm">
+            <label for="org_id">Organization ID:</label>
+            <input type="number" id="org_id" name="org_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'deleteOrgForm', 'http://127.0.0.1:7002/deleteorg')">Delete Organization</button>
+        </form>
+    </div>
+
+    <!-- Create Job Section -->
+    <div id="createJob" class="section">
+        <h2>Create Job</h2>
+        <form id="createJobForm">
+            <label for="description">Job Description:</label>
+            <textarea id="description" name="description" required></textarea>
+            <br>
+            <label for="organizationId">Organization ID:</label>
+            <input type="number" id="organizationId" name="organizationId" required>
+            <br>
+            <label for="expiryDays">Expiry Days:</label>
+            <input type="number" id="expiryDays" name="expiryDays" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'createJobForm', 'http://127.0.0.1:7002/createjob')">Create Job</button>
+        </form>
+    </div>
+
+    <!-- Get Job Section -->
+    <div id="getJob" class="section">
+        <h2>Get Job</h2>
+        <form id="getJobForm">
+            <label for="job_id">Job ID:</label>
+            <input type="number" id="job_id" name="job_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'getJobForm', 'http://127.0.0.1:7002/getjob')">Get Job</button>
+        </form>
+    </div>
+
+    <!-- Update Job Section -->
+    <div id="updateJob" class="section">
+        <h2>Update Job</h2>
+        <form id="updateJobForm">
+            <label for="job_id">Job ID:</label>
+            <input type="number" id="job_id" name="job_id" required>
+            <br>
+            <label for="description">New Job Description:</label>
+            <textarea id="description" name="description"></textarea>
+            <br>
+            <label for="organizationId">New Organization ID:</label>
+            <input type="number" id="organizationId" name="organizationId">
+            <br>
+            <label for="expiryDays">New Expiry Days:</label>
+            <input type="number" id="expiryDays" name="expiryDays">
+            <br>
+            <button type="button" onclick="submitForm(event, 'updateJobForm', 'http://127.0.0.1:7002/updatejob')">Update Job</button>
+        </form>
+    </div>
+
+    <!-- Delete Job Section -->
+    <div id="deleteJob" class="section">
+        <h2>Delete Job</h2>
+        <form id="deleteJobForm">
+            <label for="job_id">Job ID:</label>
+            <input type="number" id="job_id" name="job_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'deleteJobForm', 'http://127.0.0.1:7002/deletejob')">Delete Job</button>
+        </form>
+    </div>
+
+    <!-- Create Profile Section -->
+    <div id="createProfile" class="section">
+        <h2>Create Profile</h2>
+        <form id="createProfileForm">
+            <label for="skills">Skills:</label>
+            <input type="text" id="skills" name="skills" required>
+            <br>
+            <label for="currentAdd">Current Address:</label>
+            <input type="text" id="currentAdd" name="currentAdd" required>
+            <br>
+            <label for="PermanentAdd">Permanent Address:</label>
+            <input type="text" id="PermanentAdd" name="PermanentAdd" required>
+            <br>
+            <label for="jobhistory">Job History:</label>
+            <input type="text" id="jobhistory" name="jobhistory">
+            <br>
+            <label for="preferredlocation">Preferred Location:</label>
+            <input type="text" id="preferredlocation" name="preferredlocation">
+            <br>
+            <button type="button" onclick="submitForm(event, 'createProfileForm', 'http://127.0.0.1:7002/createprofile')">Create Profile</button>
+        </form>
+    </div>
+
+    <!-- Get Profile Section -->
+    <div id="getProfile" class="section">
+        <h2>Get Profile</h2>
+        <form id="getProfileForm">
+            <label for="profile_id">Profile ID:</label>
+            <input type="number" id="profile_id" name="profile_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'getProfileForm', 'http://127.0.0.1:7002/getprofile')">Get Profile</button>
+        </form>
+    </div>
+
+    <!-- Update Profile Section -->
+    <div id="updateProfile" class="section">
+        <h2>Update Profile</h2>
+        <form id="updateProfileForm">
+            <label for="profile_id">Profile ID:</label>
+            <input type="number" id="profile_id" name="profile_id" required>
+            <br>
+            <label for="skills">New Skills:</label>
+            <input type="text" id="skills" name="skills">
+            <br>
+            <label for="currentAdd">New Current Address:</label>
+            <input type="text" id="currentAdd" name="currentAdd">
+            <br>
+            <label for="PermanentAdd">New Permanent Address:</label>
+            <input type="text" id="PermanentAdd" name="PermanentAdd">
+            <br>
+            <label for="jobhistory">New Job History:</label>
+            <input type="text" id="jobhistory" name="jobhistory">
+            <br>
+            <label for="preferredlocation">New Preferred Location:</label>
+            <input type="text" id="preferredlocation" name="preferredlocation">
+            <br>
+            <button type="button" onclick="submitForm(event, 'updateProfileForm', 'http://127.0.0.1:7002/updateprofile')">Update Profile</button>
+        </form>
+    </div>
+
+    <!-- Delete Profile Section -->
+    <div id="deleteProfile" class="section">
+        <h2>Delete Profile</h2>
+        <form id="deleteProfileForm">
+            <label for="profile_id">Profile ID:</label>
+            <input type="number" id="profile_id" name="profile_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'deleteProfileForm', 'http://127.0.0.1:7002/deleteprofile')">Delete Profile</button>
+        </form>
+    </div>
+
+    <!-- Create Application Section -->
+    <div id="createApp" class="section">
+        <h2>Create Application</h2>
+        <form id="createAppForm">
+            <label for="job_id">Job ID:</label>
+            <input type="number" id="job_id" name="job_id" required>
+            <br>
+            <label for="profile_id">Profile ID:</label>
+            <input type="number" id="profile_id" name="profile_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'createAppForm', 'http://127.0.0.1:7002/createapplication')">Create Application</button>
+        </form>
+    </div>
+
+    <!-- Get Application Section -->
+    <div id="getApp" class="section">
+        <h2>Get Application</h2>
+        <form id="getAppForm">
+            <label for="application_id">Application ID:</label>
+            <input type="number" id="application_id" name="application_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'getAppForm', 'http://127.0.0.1:7002/getapplication')">Get Application</button>
+        </form>
+    </div>
+
+    <!-- Delete Application Section -->
+    <div id="deleteApp" class="section">
+        <h2>Delete Application</h2>
+        <form id="deleteAppForm">
+            <label for="application_id">Application ID:</label>
+            <input type="number" id="application_id" name="application_id" required>
+            <br>
+            <button type="button" onclick="submitForm(event, 'deleteAppForm', 'http://127.0.0.1:7002/deleteapplication')">Delete Application</button>
+        </form>
+    </div>
+</body>
+</html>
